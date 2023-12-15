@@ -20,6 +20,16 @@
             height: 100%;
             background: url('PG 10.png') no-repeat center center;
             background-size: cover;
+            animation: zoomInOut 20s infinite;
+        }
+
+        @keyframes zoomInOut {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.15);
+            }
         }
 
         .fade-overlay {
@@ -122,11 +132,12 @@
                 setTimeout(function() {
                     var options = document.querySelectorAll('.option');
                     options.forEach(function(option, index) {
+                        // Reverse the order of appearance by using the length of the options array minus the index
                         setTimeout(function() {
                             option.classList.add('show');
-                        }, index * 1000);
+                        }, (options.length - index - 1) * 1000);
                     });
-                }, 1500); // 1.5 seconds after the scene description
+                }, 2500); // 2.5 seconds after the scene description
             }, 2000); // 2 seconds after the new background is set
         }
 
