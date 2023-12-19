@@ -9,7 +9,7 @@
             height: 100%;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Times New Roman', serif; /* Softer, more traditional font */
             color: white;
             overflow: hidden;
         }
@@ -19,16 +19,16 @@
             width: 100%;
             height: 100%;
             background: url('PG 10.png') no-repeat center center;
-            background-size: cover;
-            animation: zoomInOut 20s infinite;
+            background-size: auto 100%;
+            animation: zoomInOut 23s infinite; /* Increased the animation duration */
         }
 
         @keyframes zoomInOut {
             0%, 100% {
-                transform: scale(1);
+                background-size: auto 100%;
             }
             50% {
-                transform: scale(1.15);
+                background-size: auto 115%;
             }
         }
 
@@ -40,6 +40,18 @@
             opacity: 0;
             transition: opacity 2s ease-in-out;
             z-index: 1;
+        }
+
+        .micro-meditation {
+            opacity: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            text-align: center;
+            transition: opacity 2s ease-in-out;
+            z-index: 2;
         }
 
         .scene-description, .option {
@@ -63,7 +75,7 @@
             top: 10px;
             left: 10px;
             right: 10px;
-            z-index: 2;
+            z-index: 3;
         }
 
         #optionsContainer {
@@ -72,7 +84,7 @@
             left: 0;
             right: 0;
             text-align: center;
-            z-index: 2;
+            z-index: 3;
         }
 
         .option {
@@ -85,79 +97,16 @@
             border-radius: 10px;
             cursor: pointer;
         }
-
     </style>
-    <script>
-        var backgroundImageIndex = 0;
-        var backgroundImages = ['PG 10.png', './PG 21.png', './PG 22.png', './PG 23.png'];
-        var textElements;
-        var optionsContainer;
-
-        function changeBackground() {
-            if (backgroundImageIndex >= backgroundImages.length - 1) {
-                return; // No more changes
-            }
-
-            fadeOutText();
-
-            setTimeout(function() {
-                var fadeOverlay = document.querySelector('.fade-overlay');
-                fadeOverlay.style.opacity = 1;
-
-                setTimeout(function() {
-                    backgroundImageIndex++;
-                    var backgroundDiv = document.querySelector('.background');
-                    backgroundDiv.style.backgroundImage = "url('" + backgroundImages[backgroundImageIndex] + "')";
-
-                    setTimeout(function() {
-                        fadeOverlay.style.opacity = 0;
-                        fadeInText();
-                    }, 2000); // 2 seconds to fade from black
-
-                }, 2000); // 2 seconds to fade to black
-
-            }, 800); // Initial delay of 0.8 seconds
-        }
-
-        function fadeOutText() {
-            textElements.forEach(function(element) {
-                element.classList.remove('show');
-            });
-        }
-
-        function fadeInText() {
-            setTimeout(function() {
-                document.querySelector('.scene-description').classList.add('show');
-
-                setTimeout(function() {
-                    var options = document.querySelectorAll('.option');
-                    options.forEach(function(option, index) {
-                        // Reverse the order of appearance by using the length of the options array minus the index
-                        setTimeout(function() {
-                            option.classList.add('show');
-                        }, (options.length - index - 1) * 1000);
-                    });
-                }, 2500); // 2.5 seconds after the scene description
-            }, 2000); // 2 seconds after the new background is set
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            textElements = document.querySelectorAll('.scene-description, .option');
-            optionsContainer = document.getElementById('optionsContainer');
-            fadeInText();
-        });
-    </script>
 </head>
 <body>
     <div class="background"></div>
     <div class="fade-overlay"></div>
-    <div class="scene-description">
-        <p>In the dimly lit room, a woman with fiery red hair locks eyes with you, her presence a blend of mystery and allure.</p>
-    </div>
-    <div id="optionsContainer">
-        <div class="option" onclick="changeBackground()">Ask about her mysterious aura.</div>
-        <div class="option" onclick="changeBackground()">Praise her captivating beauty.</div>
-        <div class="option" onclick="changeBackground()">Stay silent, waiting for her cue.</div>
-    </div>
+    <div class="micro-meditation"></div>
+    <div class="scene-description"></div>
+    <div id="optionsContainer"></div>
+
+    <!-- Link to the External JavaScript File -->
+    <script src="gameLogic.js"></script>
 </body>
 </html>
